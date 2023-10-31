@@ -184,7 +184,9 @@ fn value_completion(option: &Arg) -> String {
         match option.get_value_hint() {
             ValueHint::Unknown => " -r",
             // fish has no built-in support to distinguish these
-            ValueHint::AnyPath | ValueHint::FilePath | ValueHint::ExecutablePath => " -r -F",
+            ValueHint::AnyPath
+            | ValueHint::FilePath { start_dir: _ }
+            | ValueHint::ExecutablePath => " -r -F",
             ValueHint::DirPath => " -r -f -a \"(__fish_complete_directories)\"",
             // It seems fish has no built-in support for completing command + arguments as
             // single string (CommandString). Complete just the command name.

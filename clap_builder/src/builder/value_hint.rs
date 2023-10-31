@@ -36,7 +36,10 @@ pub enum ValueHint {
     /// Any existing path.
     AnyPath,
     /// Path to a file.
-    FilePath,
+    FilePath {
+        /// The directory to start complete from.
+        start_dir: Option<&'static str>,
+    },
     /// Path to a directory.
     DirPath,
     /// Path to an executable file.
@@ -74,7 +77,7 @@ impl FromStr for ValueHint {
             "unknown" => ValueHint::Unknown,
             "other" => ValueHint::Other,
             "anypath" => ValueHint::AnyPath,
-            "filepath" => ValueHint::FilePath,
+            "filepath" => ValueHint::FilePath { start_dir: None },
             "dirpath" => ValueHint::DirPath,
             "executablepath" => ValueHint::ExecutablePath,
             "commandname" => ValueHint::CommandName,

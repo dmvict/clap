@@ -206,10 +206,14 @@ fn vals_for(o: &Arg) -> String {
                 .collect::<Vec<_>>()
                 .join(" ")
         )
-    } else if o.get_value_hint() == ValueHint::Other {
-        String::from("\"${cur}\"")
     } else {
-        String::from("$(compgen -f \"${cur}\")")
+        match o.get_value_hint() {
+            ValueHint::FilePath {
+                start_dir: Some(path),
+            } => format!("$(compgen -f \"{}${{cur}}\")", path),
+            ValueHint::Other => String::from("\"${cur}\""),
+            _ => String::from("$(compgen -f \"${cur}\")"),
+        }
     }
 }
 

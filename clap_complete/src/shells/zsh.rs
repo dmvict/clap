@@ -400,7 +400,7 @@ fn value_completion(arg: &Arg) -> Option<String> {
                 }
                 ValueHint::Other => "( )",
                 ValueHint::AnyPath => "_files",
-                ValueHint::FilePath => "_files",
+                ValueHint::FilePath { start_dir: _ } => "_files",
                 ValueHint::DirPath => "_files -/",
                 ValueHint::ExecutablePath => "_absolute_command_paths",
                 ValueHint::CommandName => "_command_names -e",
